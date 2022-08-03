@@ -1,0 +1,12 @@
+<template>
+  <button class="button md:hidden h-10" @click="$emit('handle-menu')">
+    <svg width="40" height="10" viewBox="0 0 40 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="40" height="2" rx="1" fill="black" />
+        <rect x="16" y="8" width="24" height="2" rx="1" fill="black" />
+    </svg>
+  </button>
+</template>
+
+<script lang="ts">
+export default {};
+</script>
