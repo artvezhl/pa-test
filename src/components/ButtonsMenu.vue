@@ -1,6 +1,6 @@
 <template>
-  <div class="py-6 flex items-center">
-    <app-button >
+  <div class="py-6 items-center">
+    <app-button>
       Обратный звонок
     </app-button>
     <app-button>
@@ -28,3 +28,7 @@ export default {
   },
 };
 </script>
+
+<style>
+
+</style>

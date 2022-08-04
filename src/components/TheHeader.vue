@@ -1,18 +1,23 @@
 <template>
   <header
-    @mouseenter="isMenuOpen = true"
+    @mouseenter="() => onHoverMenu(true)"
     @focus="() => menuHoverHandler(true)"
-    @mouseleave="isMenuOpen = false"
+    @mouseleave="() => onHoverMenu(false)"
     @blur="() => menuHoverHandler(false)"
-    class="p-4 fixed top-0 left-0 right-0 bg-white"
+    class="p-4 md:py-1 fixed top-0 left-0 right-0 bg-white"
   >
-    <div class="flex justify-between items-center pt-2 pb-6 md:justify-start">
+    <div
+      class="flex justify-between items-center pt-2 pb-6 md:pb-1 md:justify-start"
+      :style="{
+        height: isMenuOpen ? '120px' : '',
+      }"
+    >
       <h1>ОЛИМПИК КЛИНИК</h1>
       <app-input class="hidden md:block md:mx-auto lg:w-2/5 md:w-2/6" />
       <app-buttons-menu class="hidden md:block md:ml-auto py-0" />
       <app-menu-button @handle-menu="onHandleMenu" />
     </div>
-    <div v-show="isMenuOpen || (innerWidth >=768 && positionTop < 40)">
+    <div class="menu__list" v-show="isMenuOpen">
       <app-input class="block md:hidden" />
       <app-nav-list />
       <app-buttons-menu class="block md:hidden" />
@@ -39,13 +44,16 @@ export default defineComponent({
       isMenuOpen: false,
       isMobile: false,
       innerWidth: 0 as number,
-      pageHeight: 0,
-      positionTop: 0,
+      pageHeight: 0 as number,
+      positionTop: 0 as number,
     };
   },
   methods: {
     onHandleMenu() {
       this.isMenuOpen = !this.isMenuOpen;
+    },
+    onHoverMenu(isOpen: boolean) {
+      if (this.innerWidth >= 768) this.isMenuOpen = isOpen;
     },
     menuHoverHandler(isOpen: boolean) {
       if (this.isMenuOpen !== isOpen) this.isMenuOpen = isOpen;
@@ -71,5 +79,26 @@ export default defineComponent({
     this.innerWidth = window.innerWidth;
     this.isMobile = this.innerWidth < 768;
   },
+  watch: {
+    // (innerWidth >=768 && positionTop < 40)
+    positionTop() {
+      if (this.innerWidth >= 768 && this.positionTop < 40) {
+        this.isMenuOpen = true;
+      } else {
+        this.isMenuOpen = false;
+      }
+    },
+  },
 });
 </script>
+
+<style>
+.menu__list {
+  transform: translateY(-180%);
+  animation: ani .3s forwards;
+}
+@keyframes ani {
+  0% {transform: translateY(-150%);}
+  100% {transform: translateY(0);}
+}
+</style>
