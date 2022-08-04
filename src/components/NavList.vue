@@ -1,6 +1,6 @@
 <template>
     <nav>
-        <ul>
+        <ul class="md:flex md:flex-row md:gap-5">
             <li v-for="item in menuList" :key="item.index" class="py-3">
                 <a :href="item.link">{{item.name}}</a>
             </li>
@@ -21,3 +21,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style>
+a {
+    font-weight: bold;
+}
+</style>
